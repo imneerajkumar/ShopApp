@@ -7,6 +7,7 @@ import HeaderButton from '../../components/UI/HeaderButton';
 import Input from '../../components/UI/Input';
 import * as productsAction from '../../store/actions/products';
 import colors from '../../constants/colors';
+import ImageInput from '../../components/UI/ImageInput';
 
 const formReducer = (state, action) => {
   if (action.type === 'UPDATE') {
@@ -132,12 +133,9 @@ function EditProductScreen({ navigation }) {
             initiallyValid={editedProduct ? true : false}
             required
           />
-          <Input 
+          <ImageInput 
             id="imageUrl"
-            label="Image Url"
-            errorText="Please enter a valid image url!"
-            keyboardType="default"
-            returnKeyType="next"
+            label="Image"
             onInputChange={inputChangeHandler}
             initialValue={editedProduct ? editedProduct.imageUrl : ""}
             initiallyValid={editedProduct ? true : false}

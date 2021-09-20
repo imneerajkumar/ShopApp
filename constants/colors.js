@@ -3,5 +3,6 @@ export default {
   accent: "#FFC107",
   black: "#000",
   white: "#fff",
-  grey: "#888"
+  grey: "#888",
+  light: "#ccc"
 }

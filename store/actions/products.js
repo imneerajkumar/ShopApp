@@ -1,10 +1,37 @@
 import Product from "../../models/product";
 import * as Notifications from 'expo-notifications';
+import * as firebase from 'firebase';
+import firebaseConfig from '../../constants/firebase';
 
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+
+export const uploadImage = async (uri) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function () {
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+  const ref = firebase.storage().ref().child(new Date().toISOString());
+  const snapshot = await ref.put(blob);
+  blob.close();
+
+  return await snapshot.ref.getDownloadURL();
+}
 
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -44,7 +71,7 @@ export const fetchProducts = () => {
   };
 };
 
-export const createProduct = (title, imageUrl, description, price) => {
+export const createProduct = (title, uri, description, price) => {
   return async (dispatch, getState) => {
     let pushToken = null;
     const settings = await Notifications.getPermissionsAsync();
@@ -66,6 +93,7 @@ export const createProduct = (title, imageUrl, description, price) => {
 
     const token = getState().auth.token;
     const userId = getState().auth.userId;
+    const imageUrl = await uploadImage(uri);
     const response = await fetch(`https://shopapp-d0c44-default-rtdb.firebaseio.com/products.json?auth=${token}`, 
     {
       method: "POST",
@@ -96,9 +124,10 @@ export const createProduct = (title, imageUrl, description, price) => {
   };
 };
 
-export const updateProduct = (id, title, imageUrl, description) => {
+export const updateProduct = (id, title, uri, description) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
+    const imageUrl = await uploadImage(uri);
     const response = await fetch(`https://shopapp-d0c44-default-rtdb.firebaseio.com/products/${id}.json?auth=${token}`, 
     {
       method: 'PATCH',

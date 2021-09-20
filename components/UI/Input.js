@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
+import colors from '../../constants/colors';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderBottomColor: "#ccc",
+    borderBottomColor: colors.light,
     borderBottomWidth: 2
   },
   errorContainer: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   error: {
     fontFamily: "open-sans",
-    color: "red",
+    color: colors.primary,
     fontSize: 14
   }
 })
