@@ -2,11 +2,13 @@
   "expo": {
     "name": "ShopApp",
     "slug": "ShopApp",
+    "description": "This is a clone of a online shopping app, implementing features like auth, adding products to cart, ordering as well as adding their own products.",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/tag.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/tag.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,17 +19,23 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.imneerajKumar.shop-app",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.imneerajKumar.shop_app",
+      "versionCode": 1,
       "useNextNotificationsApi": true,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/tag.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE"]
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "notification": {
+      "icon": "./assets/tag.png",
+      "iosDisplayInForeground": true
     }
   }
 }
